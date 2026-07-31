@@ -1,5 +1,5 @@
 import streamlit as st
-
+from clients.auth_client import register_process
 
 st.title("📝 회원가입")
 st.write("회원 정보를 입력해 주세요.")
@@ -28,4 +28,12 @@ if signup_submitted:
     if not signup_id or not signup_pwd or not signup_name:
         st.warning("ID, PWD, 이름을 모두 입력해 주세요.")
     else:
-        st.success(f"{signup_name}님, 회원가입 정보가 입력되었습니다.")
+        payload = {
+            "id": signup_id, 
+            "pwd": signup_pwd, 
+            "name": signup_name,
+        }
+        result = register_process(payload)
+        if result is not None:
+            st.success(f" {result["name"]}님, 회원가입 정보가 입력되었습니다.")
+        # st.success(f"{signup_name}님, 회원가입 정보가 입력되었습니다.")
